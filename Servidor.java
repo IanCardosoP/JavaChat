@@ -58,7 +58,7 @@ public class Servidor implements Runnable {
     }
 
     // Método para eliminar un cliente desconectado de la lista
-    public void eliminarCliente(HiloCliente cliente) {
+    public synchronized void eliminarCliente(HiloCliente cliente) {
         clientes.remove(cliente);
         broadcastMessage(null, "SERVIDOR > " + cliente.getNombreCliente() + " se ha desconectado.");
     }
@@ -71,7 +71,7 @@ public class Servidor implements Runnable {
     }
 
     // Método con el que el servidor se comunica con los clientes
-    public void broadcastMessage(HiloCliente remitente, String mensaje) {
+    public synchronized void broadcastMessage(HiloCliente remitente, String mensaje) {
         if (mensaje.contains("/clientes")) {
             // Lista de clientes conectados
             enviarListaClientes(remitente);  
